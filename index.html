@@ -4,63 +4,145 @@
 <meta charset="UTF-8">
 <title>ElbEats</title>
 <style>
+
 body {
+  margin: 0;
   font-family: Arial;
-  background: #111;
+  background: linear-gradient(135deg, #0f172a, #020617);
   color: white;
-  text-align: center;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00f5d4;
+}
+
+/* Layout */
+.container {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* Products */
+.products {
+  flex: 3;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
 .card {
-  background: #222;
+  background: rgba(255,255,255,0.05);
   padding: 20px;
-  margin: 20px;
-  border-radius: 10px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0,255,200,0.1);
+}
+
+.card h2 {
+  margin: 0;
+}
+
+.price {
+  color: #00f5d4;
+  margin: 10px 0;
 }
 
 button {
-  padding: 10px;
-  background: #00a8a8;
+  background: #00f5d4;
   border: none;
-  color: white;
+  padding: 10px;
+  border-radius: 10px;
   cursor: pointer;
 }
+
+/* Cart */
+.cart {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 15px;
+  height: fit-content;
+  box-shadow: 0 0 20px rgba(0,255,200,0.1);
+}
+
+.cart h3 {
+  margin-top: 0;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.total {
+  margin-top: 20px;
+  font-size: 20px;
+  color: #00f5d4;
+}
+
 </style>
 </head>
 <body>
 
-<h1>🍔 ElbEats Hamburg</h1>
+<header>
+  <div class="logo">🍔 ElbEats Hamburg</div>
+  <div>RP Lieferdienst</div>
+</header>
 
-<div class="card">
-  <h2>☕ Heiße Schokolade</h2>
-  <p>2000€</p>
-  <button onclick="add('Heiße Schokolade', 2000)">Bestellen</button>
+<div class="container">
+
+  <!-- Produkte -->
+  <div class="products">
+
+    <div class="card">
+      <h2>☕ Heiße Schokolade</h2>
+      <div class="price">2000€</div>
+      <button onclick="add('Schokolade', 2000)">+</button>
+    </div>
+
+    <div class="card">
+      <h2>🍎 Apfel</h2>
+      <div class="price">1000€</div>
+      <button onclick="add('Apfel', 1000)">+</button>
+    </div>
+
+    <div class="card">
+      <h2>⚡ Energy</h2>
+      <div class="price">250€</div>
+      <button onclick="add('Energy', 250)">+</button>
+    </div>
+
+    <div class="card">
+      <h2>🍪 Kekse</h2>
+      <div class="price">500€</div>
+      <button onclick="add('Kekse', 500)">+</button>
+    </div>
+
+  </div>
+
+  <!-- Warenkorb -->
+  <div class="cart">
+    <h3>🛒 Warenkorb</h3>
+    <div id="cart"></div>
+    <div class="total">Gesamt: <span id="total">0</span>€</div>
+  </div>
+
 </div>
-
-<div class="card">
-  <h2>🍎 Apfel</h2>
-  <p>1000€</p>
-  <button onclick="add('Apfel', 1000)">Bestellen</button>
-</div>
-
-<div class="card">
-  <h2>⚡ Energy Drink</h2>
-  <p>250€</p>
-  <button onclick="add('Energy', 250)">Bestellen</button>
-</div>
-
-<div class="card">
-  <h2>🍪 Kekse</h2>
-  <p>500€</p>
-  <button onclick="add('Kekse', 500)">Bestellen</button>
-</div>
-
-<h2>🛒 Warenkorb</h2>
-<ul id="cart"></ul>
-<p>Gesamt: <span id="total">0</span>€</p>
 
 <script>
-let total = 0;
 let items = {};
 
 function add(name, price) {
@@ -69,20 +151,21 @@ function add(name, price) {
   }
 
   items[name].qty++;
-
   updateCart();
 }
 
 function updateCart() {
   const cart = document.getElementById("cart");
   cart.innerHTML = "";
-  total = 0;
+  let total = 0;
 
   for (let name in items) {
-    const item = items[name];
-    const li = document.createElement("li");
-    li.textContent = name + " x" + item.qty + " = " + (item.price * item.qty) + "€";
-    cart.appendChild(li);
+    let item = items[name];
+    let div = document.createElement("div");
+    div.className = "item";
+    div.textContent = name + " x" + item.qty + " = " + (item.price * item.qty) + "€";
+    cart.appendChild(div);
+
     total += item.price * item.qty;
   }
 
@@ -92,3 +175,4 @@ function updateCart() {
 
 </body>
 </html>
+

@@ -4,68 +4,55 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ElbEats Hamburg</title>
+<title>ElbEats</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial;
-  background: radial-gradient(circle at top, #0f172a, #020617);
+  background: #0b1220;
   color: white;
 }
 
 /* HEADER */
 header {
+  padding: 15px;
   display: flex;
   justify-content: space-between;
-  padding: 15px 20px;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items: center;
 }
 
 .logo {
-  font-size: 20px;
   font-weight: bold;
+  font-size: 18px;
 }
 
-.info {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.badge {
-  background: rgba(255,255,255,0.05);
-  padding: 8px 12px;
-  border-radius: 20px;
+.status {
   font-size: 13px;
+  color: #22c55e;
 }
 
-/* LAYOUT */
-.container {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-  padding: 15px;
-}
-
-/* CARDS */
-.card {
-  background: rgba(255,255,255,0.05);
-  border-radius: 15px;
-  padding: 15px;
-}
-
-/* PRODUCTS */
+/* PRODUKTE */
 .products {
+  padding: 15px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 15px;
 }
 
-.product img {
+.card {
+  background: #111827;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card img {
   width: 100%;
-  border-radius: 10px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 10px;
 }
 
 .price {
@@ -73,56 +60,41 @@ header {
 }
 
 button {
+  margin-top: 8px;
   width: 100%;
   padding: 10px;
-  border-radius: 10px;
-  border: none;
   background: #22c55e;
+  border: none;
+  border-radius: 8px;
   color: white;
-  cursor: pointer;
 }
 
 /* CART */
+.cart {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #020617;
+  padding: 15px;
+  border-top: 1px solid #222;
+}
+
 .cart-item {
   display: flex;
   justify-content: space-between;
-  margin: 8px 0;
 }
 
-.remove {
-  background: red;
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 8px;
   border: none;
-  color: white;
-  padding: 5px;
-  cursor: pointer;
 }
 
 .total {
   margin-top: 10px;
   color: #22c55e;
-}
-
-/* INPUT */
-input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255,255,255,0.05);
-  color: white;
-}
-
-/* MOBILE */
-@media (max-width: 800px) {
-  .container {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .products {
-    grid-template-columns: 1fr;
-  }
 }
 </style>
 </head>
@@ -130,67 +102,58 @@ input {
 <body>
 
 <header>
-  <div class="logo">🍔 ElbEats Hamburg</div>
-
-  <div class="info">
-    <div class="badge">🕒 16:00 - 20:00</div>
-    <div class="badge" id="status">Status...</div>
-  </div>
+  <div class="logo">🍔 ElbEats</div>
+  <div class="status" id="status">Status...</div>
 </header>
 
-<div class="container">
-
-<!-- PRODUKTE -->
-<div class="card">
 <div class="products">
 
-<div class="product">
-<img src="https://images.unsplash.com/photo-1511920170033-f8396924c348">
+<div class="card">
+<img src="https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed">
+<div class="card-content">
 <h3>Heiße Schokolade</h3>
 <div class="price">2000€</div>
 <button onclick="add('Schokolade',2000)">Hinzufügen</button>
 </div>
+</div>
 
-<div class="product">
+<div class="card">
 <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce">
+<div class="card-content">
 <h3>Apfel</h3>
 <div class="price">1000€</div>
 <button onclick="add('Apfel',1000)">Hinzufügen</button>
 </div>
+</div>
 
-<div class="product">
-<img src="https://images.unsplash.com/photo-1622543925917-763c34c68d30">
+<div class="card">
+<img src="https://images.unsplash.com/photo-1594035910387-fea47794261f">
+<div class="card-content">
 <h3>Energy Drink</h3>
 <div class="price">250€</div>
 <button onclick="add('Energy',250)">Hinzufügen</button>
 </div>
+</div>
 
-<div class="product">
+<div class="card">
 <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35">
+<div class="card-content">
 <h3>Kekse</h3>
 <div class="price">500€</div>
 <button onclick="add('Kekse',500)">Hinzufügen</button>
 </div>
-
-</div>
 </div>
 
-<!-- WARENKORB -->
-<div class="card">
+</div>
 
-<h3>🛒 Warenkorb</h3>
-
+<div class="cart">
 <div id="cart"></div>
-
 <div class="total">Gesamt: <span id="total">0</span>€</div>
 
-<input id="name" placeholder="Dein Name">
+<input id="name" placeholder="Name">
 <input id="adresse" placeholder="Adresse">
 
 <button onclick="order()">Bestellen</button>
-
-</div>
-
 </div>
 
 <script>
@@ -203,14 +166,7 @@ function add(name, price) {
   update();
 }
 
-// entfernen
-function remove(name) {
-  items[name].qty--;
-  if (items[name].qty <= 0) delete items[name];
-  update();
-}
-
-// update cart
+// update
 function update() {
   let cart = document.getElementById("cart");
   cart.innerHTML = "";
@@ -218,13 +174,12 @@ function update() {
 
   for (let name in items) {
     let item = items[name];
-
     let div = document.createElement("div");
     div.className = "cart-item";
 
     div.innerHTML = `
-      ${name} x${item.qty} (${item.price * item.qty}€)
-      <button class="remove" onclick="remove('${name}')">X</button>
+      ${name} x${item.qty}
+      <button onclick="remove('${name}')">X</button>
     `;
 
     cart.appendChild(div);
@@ -234,39 +189,37 @@ function update() {
   document.getElementById("total").textContent = total;
 }
 
+// entfernen
+function remove(name) {
+  items[name].qty--;
+  if (items[name].qty <= 0) delete items[name];
+  update();
+}
+
 // status
 function updateStatus() {
-  const hour = new Date().getHours();
-  const status = document.getElementById("status");
+  let hour = new Date().getHours();
+  let status = document.getElementById("status");
 
   if (hour >= 16 && hour < 20) {
     status.textContent = "🟢 Geöffnet";
-    status.style.color = "#22c55e";
   } else {
     status.textContent = "🔴 Geschlossen";
-    status.style.color = "red";
   }
 }
 
 updateStatus();
 
-// bestellen (Discord)
+// bestellen
 function order() {
   let name = document.getElementById("name").value;
   let adresse = document.getElementById("adresse").value;
 
-  if (!name || !adresse) {
-    alert("Bitte alles ausfüllen!");
-    return;
-  }
-
-  let text = `🛒 Bestellung\nName: ${name}\nAdresse: ${adresse}\n`;
+  let text = `🛒 Bestellung\n${name}\n${adresse}\n`;
 
   for (let item in items) {
     text += `${item} x${items[item].qty}\n`;
   }
-
-  text += `Gesamt: ${document.getElementById("total").textContent}€`;
 
   fetch("https://discord.com/api/webhooks/1498386548838633677/EV45LQzX0HFRqYhNuF-2XWFw7eUXVC59WWrGT6Th76Yb65zEckweiP8vYUGkuXkHVgE-", {
     method: "POST",
@@ -275,8 +228,6 @@ function order() {
   });
 
   alert("Bestellung gesendet!");
-  items = {};
-  update();
 }
 </script>
 

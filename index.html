@@ -2,13 +2,15 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>ElbEats Hamburg</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial;
-  background: linear-gradient(135deg, #0b1220, #020617);
+  background: radial-gradient(circle at top, #0f172a, #020617);
   color: white;
 }
 
@@ -16,139 +18,154 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .logo {
-  font-size: 22px;
-  color: #00f5d4;
+  font-size: 20px;
   font-weight: bold;
 }
 
-.user {
+.info {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.badge {
   background: rgba(255,255,255,0.05);
-  padding: 10px 15px;
+  padding: 8px 12px;
   border-radius: 20px;
+  font-size: 13px;
 }
 
 /* LAYOUT */
 .container {
-  display: flex;
-  gap: 20px;
-  padding: 20px;
-}
-
-/* PRODUKTE */
-.products {
-  flex: 2;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 2fr 1fr;
   gap: 20px;
+  padding: 15px;
 }
 
+/* CARDS */
 .card {
   background: rgba(255,255,255,0.05);
-  padding: 15px;
   border-radius: 15px;
-  box-shadow: 0 0 25px rgba(0,255,200,0.1);
-  transition: 0.2s;
+  padding: 15px;
 }
 
-.card:hover {
-  transform: scale(1.03);
+/* PRODUCTS */
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
 }
 
-.card img {
+.product img {
   width: 100%;
   border-radius: 10px;
 }
 
 .price {
-  color: #00f5d4;
-  margin: 10px 0;
+  color: #22c55e;
 }
 
 button {
-  background: #00f5d4;
-  border: none;
+  width: 100%;
   padding: 10px;
   border-radius: 10px;
+  border: none;
+  background: #22c55e;
+  color: white;
   cursor: pointer;
-  width: 100%;
 }
 
 /* CART */
-.cart {
-  flex: 1;
-  background: rgba(255,255,255,0.05);
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 25px rgba(0,255,200,0.1);
-}
-
-.item {
+.cart-item {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  margin: 8px 0;
 }
 
 .remove {
   background: red;
   border: none;
-  padding: 5px;
   color: white;
+  padding: 5px;
   cursor: pointer;
 }
 
+.total {
+  margin-top: 10px;
+  color: #22c55e;
+}
+
+/* INPUT */
 input {
   width: 100%;
   padding: 10px;
   margin-top: 10px;
   border-radius: 10px;
   border: none;
+  background: rgba(255,255,255,0.05);
+  color: white;
 }
 
-.total {
-  margin-top: 10px;
-  font-size: 18px;
-  color: #00f5d4;
+/* MOBILE */
+@media (max-width: 800px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .products {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
-
 </head>
+
 <body>
 
 <header>
-  <div class="logo">🍔 ElbEats</div>
-  <div class="user">RP Lieferdienst</div>
+  <div class="logo">🍔 ElbEats Hamburg</div>
+
+  <div class="info">
+    <div class="badge">🕒 16:00 - 20:00</div>
+    <div class="badge" id="status">Status...</div>
+  </div>
 </header>
 
 <div class="container">
 
+<!-- PRODUKTE -->
 <div class="card">
+<div class="products">
+
+<div class="product">
 <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348">
 <h3>Heiße Schokolade</h3>
 <div class="price">2000€</div>
 <button onclick="add('Schokolade',2000)">Hinzufügen</button>
 </div>
 
-<div class="card">
+<div class="product">
 <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce">
 <h3>Apfel</h3>
 <div class="price">1000€</div>
 <button onclick="add('Apfel',1000)">Hinzufügen</button>
 </div>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1580910051074-3eb694886505">
+<div class="product">
+<img src="https://images.unsplash.com/photo-1622543925917-763c34c68d30">
 <h3>Energy Drink</h3>
 <div class="price">250€</div>
 <button onclick="add('Energy',250)">Hinzufügen</button>
 </div>
 
-<div class="card">
+<div class="product">
 <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35">
 <h3>Kekse</h3>
 <div class="price">500€</div>
@@ -156,8 +173,11 @@ input {
 </div>
 
 </div>
+</div>
 
-<div class="cart">
+<!-- WARENKORB -->
+<div class="card">
+
 <h3>🛒 Warenkorb</h3>
 
 <div id="cart"></div>
@@ -165,9 +185,9 @@ input {
 <div class="total">Gesamt: <span id="total">0</span>€</div>
 
 <input id="name" placeholder="Dein Name">
-<input id="adresse" placeholder="Adresse / Ort im RP">
+<input id="adresse" placeholder="Adresse">
 
-<button onclick="order()">Bestellung senden</button>
+<button onclick="order()">Bestellen</button>
 
 </div>
 
@@ -176,18 +196,21 @@ input {
 <script>
 let items = {};
 
+// hinzufügen
 function add(name, price) {
   if (!items[name]) items[name] = {price: price, qty: 0};
   items[name].qty++;
   update();
 }
 
+// entfernen
 function remove(name) {
   items[name].qty--;
   if (items[name].qty <= 0) delete items[name];
   update();
 }
 
+// update cart
 function update() {
   let cart = document.getElementById("cart");
   cart.innerHTML = "";
@@ -195,11 +218,12 @@ function update() {
 
   for (let name in items) {
     let item = items[name];
+
     let div = document.createElement("div");
-    div.className = "item";
+    div.className = "cart-item";
 
     div.innerHTML = `
-      ${name} x${item.qty} = ${item.price * item.qty}€
+      ${name} x${item.qty} (${item.price * item.qty}€)
       <button class="remove" onclick="remove('${name}')">X</button>
     `;
 
@@ -210,6 +234,23 @@ function update() {
   document.getElementById("total").textContent = total;
 }
 
+// status
+function updateStatus() {
+  const hour = new Date().getHours();
+  const status = document.getElementById("status");
+
+  if (hour >= 16 && hour < 20) {
+    status.textContent = "🟢 Geöffnet";
+    status.style.color = "#22c55e";
+  } else {
+    status.textContent = "🔴 Geschlossen";
+    status.style.color = "red";
+  }
+}
+
+updateStatus();
+
+// bestellen (Discord)
 function order() {
   let name = document.getElementById("name").value;
   let adresse = document.getElementById("adresse").value;

@@ -2,41 +2,47 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>ElbEats</title>
-<style>
+<title>ElbEats Hamburg</title>
 
+<style>
 body {
   margin: 0;
   font-family: Arial;
-  background: linear-gradient(135deg, #0f172a, #020617);
+  background: linear-gradient(135deg, #0b1220, #020617);
   color: white;
 }
 
-/* Header */
+/* HEADER */
 header {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.4);
   backdrop-filter: blur(10px);
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 22px;
   color: #00f5d4;
+  font-weight: bold;
 }
 
-/* Layout */
+.user {
+  background: rgba(255,255,255,0.05);
+  padding: 10px 15px;
+  border-radius: 20px;
+}
+
+/* LAYOUT */
 .container {
   display: flex;
-  padding: 20px;
   gap: 20px;
+  padding: 20px;
 }
 
-/* Products */
+/* PRODUKTE */
 .products {
-  flex: 3;
+  flex: 2;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
@@ -44,14 +50,19 @@ header {
 
 .card {
   background: rgba(255,255,255,0.05);
-  padding: 20px;
+  padding: 15px;
   border-radius: 15px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px rgba(0,255,200,0.1);
+  box-shadow: 0 0 25px rgba(0,255,200,0.1);
+  transition: 0.2s;
 }
 
-.card h2 {
-  margin: 0;
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
 }
 
 .price {
@@ -65,20 +76,16 @@ button {
   padding: 10px;
   border-radius: 10px;
   cursor: pointer;
+  width: 100%;
 }
 
-/* Cart */
+/* CART */
 .cart {
   flex: 1;
   background: rgba(255,255,255,0.05);
   padding: 20px;
   border-radius: 15px;
-  height: fit-content;
-  box-shadow: 0 0 20px rgba(0,255,200,0.1);
-}
-
-.cart h3 {
-  margin-top: 0;
+  box-shadow: 0 0 25px rgba(0,255,200,0.1);
 }
 
 .item {
@@ -87,58 +94,84 @@ button {
   margin: 10px 0;
 }
 
-.total {
-  margin-top: 20px;
-  font-size: 20px;
-  color: #00f5d4;
+.remove {
+  background: red;
+  border: none;
+  padding: 5px;
+  color: white;
+  cursor: pointer;
 }
 
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+.total {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #00f5d4;
+}
 </style>
+
 </head>
 <body>
 
 <header>
-  <div class="logo">🍔 ElbEats Hamburg</div>
-  <div>RP Lieferdienst</div>
+  <div class="logo">🍔 ElbEats</div>
+  <div class="user">RP Lieferdienst</div>
 </header>
 
 <div class="container">
 
-  <!-- Produkte -->
-  <div class="products">
+<div class="products">
 
-    <div class="card">
-      <h2>☕ Heiße Schokolade</h2>
-      <div class="price">2000€</div>
-      <button onclick="add('Schokolade', 2000)">+</button>
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90">
+<h3>Heiße Schokolade</h3>
+<div class="price">2000€</div>
+<button onclick="add('Schokolade',2000)">Hinzufügen</button>
+</div>
 
-    <div class="card">
-      <h2>🍎 Apfel</h2>
-      <div class="price">1000€</div>
-      <button onclick="add('Apfel', 1000)">+</button>
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce">
+<h3>Apfel</h3>
+<div class="price">1000€</div>
+<button onclick="add('Apfel',1000)">Hinzufügen</button>
+</div>
 
-    <div class="card">
-      <h2>⚡ Energy</h2>
-      <div class="price">250€</div>
-      <button onclick="add('Energy', 250)">+</button>
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1600271886742-f049cd5bba1c">
+<h3>Energy</h3>
+<div class="price">250€</div>
+<button onclick="add('Energy',250)">Hinzufügen</button>
+</div>
 
-    <div class="card">
-      <h2>🍪 Kekse</h2>
-      <div class="price">500€</div>
-      <button onclick="add('Kekse', 500)">+</button>
-    </div>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c">
+<h3>Kekse</h3>
+<div class="price">500€</div>
+<button onclick="add('Kekse',500)">Hinzufügen</button>
+</div>
 
-  </div>
+</div>
 
-  <!-- Warenkorb -->
-  <div class="cart">
-    <h3>🛒 Warenkorb</h3>
-    <div id="cart"></div>
-    <div class="total">Gesamt: <span id="total">0</span>€</div>
-  </div>
+<div class="cart">
+<h3>🛒 Warenkorb</h3>
+
+<div id="cart"></div>
+
+<div class="total">Gesamt: <span id="total">0</span>€</div>
+
+<input id="name" placeholder="Dein Name">
+<input id="adresse" placeholder="Adresse / Ort im RP">
+
+<button onclick="order()">Bestellung senden</button>
+
+</div>
 
 </div>
 
@@ -146,16 +179,19 @@ button {
 let items = {};
 
 function add(name, price) {
-  if (!items[name]) {
-    items[name] = { price: price, qty: 0 };
-  }
-
+  if (!items[name]) items[name] = {price: price, qty: 0};
   items[name].qty++;
-  updateCart();
+  update();
 }
 
-function updateCart() {
-  const cart = document.getElementById("cart");
+function remove(name) {
+  items[name].qty--;
+  if (items[name].qty <= 0) delete items[name];
+  update();
+}
+
+function update() {
+  let cart = document.getElementById("cart");
   cart.innerHTML = "";
   let total = 0;
 
@@ -163,16 +199,47 @@ function updateCart() {
     let item = items[name];
     let div = document.createElement("div");
     div.className = "item";
-    div.textContent = name + " x" + item.qty + " = " + (item.price * item.qty) + "€";
-    cart.appendChild(div);
 
+    div.innerHTML = `
+      ${name} x${item.qty} = ${item.price * item.qty}€
+      <button class="remove" onclick="remove('${name}')">X</button>
+    `;
+
+    cart.appendChild(div);
     total += item.price * item.qty;
   }
 
   document.getElementById("total").textContent = total;
 }
+
+function order() {
+  let name = document.getElementById("name").value;
+  let adresse = document.getElementById("adresse").value;
+
+  if (!name || !adresse) {
+    alert("Bitte alles ausfüllen!");
+    return;
+  }
+
+  let text = `🛒 Bestellung\nName: ${name}\nAdresse: ${adresse}\n`;
+
+  for (let item in items) {
+    text += `${item} x${items[item].qty}\n`;
+  }
+
+  text += `Gesamt: ${document.getElementById("total").textContent}€`;
+
+  fetch("https://discord.com/api/webhooks/1498386548838633677/EV45LQzX0HFRqYhNuF-2XWFw7eUXVC59WWrGT6Th76Yb65zEckweiP8vYUGkuXkHVgE-", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({content: text})
+  });
+
+  alert("Bestellung gesendet!");
+  items = {};
+  update();
+}
 </script>
 
 </body>
 </html>
-

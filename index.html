@@ -263,12 +263,14 @@ function order() {
 
   fetch("https://discord.com/api/webhooks/1499086413021450310/d5PAX1hMmNpJncotuVLFYRc4TFMMzlr3WzBTkojmPMRVh9QF1SILDkX26fBiLBziA8FO", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      content: text
-    })
+  body: JSON.stringify({
+    content: text
+  }),
+  headers: {
+    "Content-Type": "application/json"
+  },
+  mode: "no-cors"
+});
   })
   .then(() => {
     alert("✅ Bestellung gesendet!");

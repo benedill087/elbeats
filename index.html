@@ -13,79 +13,58 @@ body {
   color: white;
 }
 
-/* LOADING */
-#loading {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: #020617;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 28px;
-  font-weight: bold;
-  z-index: 999;
-}
-
-/* START SCREEN */
-#start {
-  display: none;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.start-btn {
-  padding: 15px 25px;
-  background: #22c55e;
-  border: none;
-  border-radius: 10px;
-  font-size: 18px;
-}
-
-/* APP */
-#app {
-  display: none;
-}
-
 /* HEADER */
 header {
   padding: 15px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.status {
+  font-size: 13px;
 }
 
 /* PRODUKTE */
 .products {
   padding: 15px;
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 15px;
 }
 
 .card {
   background: #111827;
-  border-radius: 12px;
+  border-radius: 15px;
   overflow: hidden;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
 }
 
 .card img {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  object-position: center;
+  height: 160px;
+  object-fit: contain;
+  background: #020617;
 }
 
 .card-content {
   padding: 10px;
 }
 
+.price {
+  color: #22c55e;
+  font-weight: bold;
+}
+
 button {
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
+  padding: 8px;
+  margin-top: 6px;
   background: #22c55e;
   border: none;
   border-radius: 8px;
@@ -99,11 +78,23 @@ button {
   width: 100%;
   background: #020617;
   padding: 10px;
+  border-top: 1px solid #111;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.total {
+  margin-top: 5px;
+  color: #22c55e;
 }
 
 input {
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   margin-top: 5px;
   border-radius: 8px;
   border: none;
@@ -113,51 +104,55 @@ input {
 
 <body>
 
-<div id="loading">🍔 ElbEats lädt...</div>
-
-<div id="start">
-  <h1>🍔 ElbEats</h1>
-  <button class="start-btn" onclick="openMenu()">Menü öffnen</button>
-</div>
-
-<div id="app">
-
 <header>
-  <div>ElbEats</div>
-  <div id="status"></div>
+  <div class="logo">🍔 ElbEats</div>
+  <div class="status" id="status"></div>
 </header>
 
 <div class="products">
 
 <div class="card">
-<img src="https://picsum.photos/400/200?1" onerror="this.src='https://via.placeholder.com/400x200'">
+<img src="https://wiki.emergency-hamburg.com/items/hot-chocolate.png">
 <div class="card-content">
 <h3>Heiße Schokolade</h3>
+<div class="price">2000€</div>
 <button onclick="add('Schokolade',2000)">+</button>
 </div>
 </div>
 
 <div class="card">
-<img src="https://picsum.photos/400/200?2" onerror="this.src='https://via.placeholder.com/400x200'">
+<img src="data:image/jpeg;base64,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">
 <div class="card-content">
 <h3>Apfel</h3>
+<div class="price">1000€</div>
 <button onclick="add('Apfel',1000)">+</button>
 </div>
 </div>
 
 <div class="card">
-<img src="https://picsum.photos/400/200?3" onerror="this.src='https://via.placeholder.com/400x200'">
+<img src="https://wiki.emergency-hamburg.com/items/energy-drink.png">
 <div class="card-content">
 <h3>Energy</h3>
+<div class="price">250€</div>
 <button onclick="add('Energy',250)">+</button>
 </div>
 </div>
 
 <div class="card">
-<img src="https://picsum.photos/400/200?4" onerror="this.src='https://via.placeholder.com/400x200'">
+<img src="https://wiki.emergency-hamburg.com/items/cookie.png">
 <div class="card-content">
 <h3>Kekse</h3>
+<div class="price">500€</div>
 <button onclick="add('Kekse',500)">+</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://wiki.emergency-hamburg.com/items/strawberryjuice.png">
+<div class="card-content">
+<h3>Erdbeer Saft</h3>
+<div class="price">1000€</div>
+<button onclick="add('Saft',1000)">+</button>
 </div>
 </div>
 
@@ -165,67 +160,68 @@ input {
 
 <div class="cart">
 <div id="cart"></div>
+<div class="total">Gesamt: <span id="total">0</span>€</div>
+
 <input id="name" placeholder="Name">
 <input id="adresse" placeholder="Adresse">
-<button onclick="order()">Bestellen</button>
-</div>
- 
-}
 
+<button onclick="order()">Bestellen</button>
 </div>
 
 <script>
-// loading
-setTimeout(() => {
-  document.getElementById("loading").style.display = "none";
-  document.getElementById("start").style.display = "flex";
-}, 1500);
-
-// open menu
-function openMenu() {
-  document.getElementById("start").style.display = "none";
-  document.getElementById("app").style.display = "block";
-}
-
-// status
-function updateStatus() {
-  let hour = new Date().getHours();
-  let status = document.getElementById("status");
-
-  if (hour >= 16 && hour < 20) {
-    status.textContent = "🟢 Geöffnet";
-  } else {
-    status.textContent = "🔴 Geschlossen";
-  }
-}
-updateStatus();
-
-// cart
 let items = {};
 
 function add(name, price) {
-  if (!items[name]) items[name] = {price: price, qty: 0};
+  if (!items[name]) items[name] = {price, qty: 0};
   items[name].qty++;
+  update();
+}
+
+function remove(name) {
+  items[name].qty--;
+  if (items[name].qty <= 0) delete items[name];
   update();
 }
 
 function update() {
   let cart = document.getElementById("cart");
   cart.innerHTML = "";
+  let total = 0;
 
   for (let item in items) {
     let div = document.createElement("div");
-    div.innerHTML = `${item} x${items[item].qty}`;
+    div.className = "cart-item";
+    div.innerHTML = `
+      ${item} x${items[item].qty}
+      <button onclick="remove('${item}')">X</button>
+    `;
     cart.appendChild(div);
+    total += items[item].price * items[item].qty;
+  }
+
+  document.getElementById("total").textContent = total;
+}
+
+function updateStatus() {
+  let hour = new Date().getHours();
+  let status = document.getElementById("status");
+
+  if (hour >= 16 && hour < 20) {
+    status.textContent = "🟢 Geöffnet (16–20 Uhr)";
+    status.style.color = "#22c55e";
+  } else {
+    status.textContent = "🔴 Geschlossen";
+    status.style.color = "red";
   }
 }
 
-// order
+updateStatus();
+
 function order() {
   let name = document.getElementById("name").value;
   let adresse = document.getElementById("adresse").value;
 
-  let text = `Bestellung\n${name}\n${adresse}\n`;
+  let text = `🛒 Bestellung\n${name}\n${adresse}\n`;
 
   for (let item in items) {
     text += `${item} x${items[item].qty}\n`;
@@ -237,7 +233,7 @@ function order() {
     body: JSON.stringify({content: text})
   });
 
-  alert("Gesendet!");
+  alert("Bestellung gesendet!");
 }
 </script>
 

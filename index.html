@@ -172,43 +172,55 @@ input {
 </div>
 
 <script>
+let items = {};
 
-  let items = {};
-
+// Produkt hinzufügen
 function add(name, price) {
-  if (!items[name]) items[name] = {price, qty: 0};
+  if (!items[name]) {
+    items[name] = { price: price, qty: 0 };
+  }
   items[name].qty++;
   update();
 }
 
+// Produkt entfernen
 function remove(name) {
+  if (!items[name]) return;
   items[name].qty--;
-  if (items[name].qty <= 0) delete items[name];
+  if (items[name].qty <= 0) {
+    delete items[name];
+  }
   update();
 }
 
+// Warenkorb aktualisieren
 function update() {
-  let cart = document.getElementById("cart");
+  const cart = document.getElementById("cart");
+  const totalEl = document.getElementById("total");
+
   cart.innerHTML = "";
   let total = 0;
 
   for (let item in items) {
     let div = document.createElement("div");
     div.className = "cart-item";
+
     div.innerHTML = `
       ${item} x${items[item].qty}
       <button onclick="remove('${item}')">X</button>
     `;
+
     cart.appendChild(div);
     total += items[item].price * items[item].qty;
   }
 
-  document.getElementById("total").textContent = total;
+  totalEl.textContent = total;
 }
 
+// Öffnungszeiten anzeigen
 function updateStatus() {
-  let hour = new Date().getHours();
-  let status = document.getElementById("status");
+  const status = document.getElementById("status");
+  const hour = new Date().getHours();
 
   if (hour >= 16 && hour < 20) {
     status.textContent = "🟢 Geöffnet (16–20 Uhr)";
@@ -221,23 +233,35 @@ function updateStatus() {
 
 updateStatus();
 
+// Bestellung senden
 function order() {
-  let name = document.getElementById("name").value;
-  let adresse = document.getElementById("adresse").value;
+  const name = document.getElementById("name").value.trim();
+  const adresse = document.getElementById("adresse").value.trim();
 
   if (!name || !adresse) {
-    alert("Bitte Name + Adresse eingeben!");
+    alert("Bitte Name und Adresse eingeben!");
     return;
   }
 
-  let text = `🛒 Bestellung\nName: ${name}\nAdresse: ${adresse}\n`;
-
-  for (let item in items) {
-    text += `${item} x${items[item].qty}\n`;
+  if (Object.keys(items).length === 0) {
+    alert("Warenkorb ist leer!");
+    return;
   }
 
-  // Discord senden
-  fetch("https://discord.com/api/webhooks/1498386548838633677/EV45LQzX0HFRqYhNuF-2XWFw7eUXVC59WWrGT6Th76Yb65zEckweiP8vYUGkuXkHVgE-", {
+  let text = "🛒 **Neue Bestellung**\n";
+  text += "👤 Name: " + name + "\n";
+  text += "📍 Adresse: " + adresse + "\n\n";
+
+  let total = 0;
+
+  for (let item in items) {
+    text += `• ${item} x${items[item].qty}\n`;
+    total += items[item].price * items[item].qty;
+  }
+
+  text += "\n💰 Gesamt: " + total + "€";
+
+  fetch("https://discord.com/api/webhooks/1499086413021450310/d5PAX1hMmNpJncotuVLFYRc4TFMMzlr3WzBTkojmPMRVh9QF1SILDkX26fBiLBziA8FO", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -246,12 +270,13 @@ function order() {
       content: text
     })
   })
-  .then(res => {
-    console.log("Status:", res.status);
-    alert("Bestellung gesendet!");
+  .then(() => {
+    alert("✅ Bestellung gesendet!");
+    items = {};
+    update();
   })
-  .catch(err => {
-    console.error(err);
-    alert("Fehler beim Senden!");
+  .catch(() => {
+    alert("❌ Fehler beim Senden!");
   });
 }
+</script>

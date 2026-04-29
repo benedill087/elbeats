@@ -230,11 +230,16 @@ function order() {
     text += `${item} x${items[item].qty}\n`;
   }
 
-  fetch("https://discord.com/api/webhooks/1498386548838633677/EV45LQzX0HFRqYhNuF-2XWFw7eUXVC59WWrGT6Th76Yb65zEckweiP8vYUGkuXkHVgE-", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({content: text})
-  });
+ fetch("https://discord.com/api/webhooks/1498386548838633677/EV45LQzX0HFRqYhNuF-2XWFw7eUXVC59WWrGT6Th76Yb65zEckweiP8vYUGkuXkHVgE-", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    content: text
+  }),
+  mode: "no-cors"
+});
 
   alert("Bestellung gesendet!");
 }

@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ElbEats</title>
 
 <style>
@@ -24,12 +23,10 @@ header {
 
 .logo {
   font-weight: bold;
-  font-size: 18px;
 }
 
 .status {
   font-size: 13px;
-  color: #22c55e;
 }
 
 /* PRODUKTE */
@@ -76,7 +73,6 @@ button {
   width: 100%;
   background: #020617;
   padding: 15px;
-  border-top: 1px solid #222;
 }
 
 .cart-item {
@@ -103,7 +99,7 @@ input {
 
 <header>
   <div class="logo">🍔 ElbEats</div>
-  <div class="status" id="status">Status...</div>
+  <div class="status" id="status">...</div>
 </header>
 
 <div class="products">
@@ -113,7 +109,7 @@ input {
 <div class="card-content">
 <h3>Heiße Schokolade</h3>
 <div class="price">2000€</div>
-<button onclick="add('Schokolade',2000)">Hinzufügen</button>
+<button onclick="add('Schokolade',2000)">+</button>
 </div>
 </div>
 
@@ -122,15 +118,16 @@ input {
 <div class="card-content">
 <h3>Apfel</h3>
 <div class="price">1000€</div>
-<button onclick="add('Apfel',1000)">Hinzufügen</button>
+<button onclick="add('Apfel',1000)">+</button>
 </div>
 </div>
 
 <div class="card">
-<img src="https://images.unsplash.com/photo-1600271886742-f049cd5bba1cclass="card-content">
+<img src="https://images.unsplash.com/photo-1600271886742-f049cd5bba1c">
+<div class="card-content">
 <h3>Energy Drink</h3>
 <div class="price">250€</div>
-<button onclick="add('Energy',250)">Hinzufügen</button>
+<button onclick="add('Energy',250)">+</button>
 </div>
 </div>
 
@@ -139,7 +136,7 @@ input {
 <div class="card-content">
 <h3>Kekse</h3>
 <div class="price">500€</div>
-<button onclick="add('Kekse',500)">Hinzufügen</button>
+<button onclick="add('Kekse',500)">+</button>
 </div>
 </div>
 
@@ -158,14 +155,18 @@ input {
 <script>
 let items = {};
 
-// hinzufügen
 function add(name, price) {
   if (!items[name]) items[name] = {price: price, qty: 0};
   items[name].qty++;
   update();
 }
 
-// update
+function remove(name) {
+  items[name].qty--;
+  if (items[name].qty <= 0) delete items[name];
+  update();
+}
+
 function update() {
   let cart = document.getElementById("cart");
   cart.innerHTML = "";
@@ -188,28 +189,21 @@ function update() {
   document.getElementById("total").textContent = total;
 }
 
-// entfernen
-function remove(name) {
-  items[name].qty--;
-  if (items[name].qty <= 0) delete items[name];
-  update();
-}
-
-// status
 function updateStatus() {
   let hour = new Date().getHours();
   let status = document.getElementById("status");
 
   if (hour >= 16 && hour < 20) {
     status.textContent = "🟢 Geöffnet";
+    status.style.color = "#22c55e";
   } else {
     status.textContent = "🔴 Geschlossen";
+    status.style.color = "red";
   }
 }
 
 updateStatus();
 
-// bestellen
 function order() {
   let name = document.getElementById("name").value;
   let adresse = document.getElementById("adresse").value;
@@ -226,7 +220,7 @@ function order() {
     body: JSON.stringify({content: text})
   });
 
-  alert("Bestellung gesendet!");
+  alert("Gesendet!");
 }
 </script>
 

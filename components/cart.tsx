@@ -39,7 +39,7 @@ export function Cart() {
       <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-card to-card/95 border-t border-border/50 p-4 safe-area-pb backdrop-blur-lg">
         <div className="max-w-lg mx-auto flex items-center justify-center gap-3 text-muted-foreground py-2">
           <ShoppingCart className="w-6 h-6 animate-float" />
-          <span className="font-medium">Your cart is empty - start adding items!</span>
+          <span className="font-medium">Dein Warenkorb ist leer - fuege Artikel hinzu!</span>
         </div>
       </div>
     )
@@ -54,9 +54,9 @@ export function Cart() {
             <Rocket className="w-8 h-8 text-primary-foreground animate-bounce" style={{ animationDelay: '0.2s' }} />
           </div>
           <p className="text-primary-foreground font-bold text-xl">
-            Order placed! Thanks, {name}!
+            Bestellung aufgegeben! Danke, {name}!
           </p>
-          <p className="text-primary-foreground/80 text-sm mt-1">Your food is on its way</p>
+          <p className="text-primary-foreground/80 text-sm mt-1">Dein Essen ist unterwegs</p>
         </div>
       </div>
     )
@@ -82,7 +82,7 @@ export function Cart() {
               </span>
             </div>
             <span className="font-bold text-foreground text-lg">
-              {totalItems} {totalItems === 1 ? "item" : "items"}
+              {totalItems} {totalItems === 1 ? "Artikel" : "Artikel"}
             </span>
           </div>
           <div className="flex items-center gap-3">
@@ -111,14 +111,14 @@ export function Cart() {
                   <div className="flex-1">
                     <p className="font-bold text-foreground text-lg">{item.name}</p>
                     <p className="text-sm text-primary font-semibold">
-                      {formatPrice(item.price)} each
+                      {formatPrice(item.price)} pro Stueck
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => removeItem(item.id)}
                       className="w-10 h-10 bg-secondary rounded-xl flex items-center justify-center text-foreground hover:bg-destructive hover:text-destructive-foreground transition-all active:scale-90"
-                      aria-label={`Remove one ${item.name}`}
+                      aria-label={`${item.name} entfernen`}
                     >
                       <Minus className="w-5 h-5" />
                     </button>
@@ -128,7 +128,7 @@ export function Cart() {
                     <button
                       onClick={() => addItem(item)}
                       className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center text-primary-foreground hover:shadow-lg hover:shadow-primary/40 transition-all active:scale-90"
-                      aria-label={`Add another ${item.name}`}
+                      aria-label={`${item.name} hinzufuegen`}
                     >
                       <Plus className="w-5 h-5" />
                     </button>
@@ -143,24 +143,24 @@ export function Cart() {
                 onClick={() => setShowCheckout(true)}
                 className="w-full bg-gradient-to-r from-primary via-accent to-primary text-primary-foreground py-4 rounded-2xl font-black text-lg hover:shadow-xl hover:shadow-primary/30 transition-all hover:-translate-y-0.5 active:scale-[0.98]"
               >
-                Proceed to Checkout
+                Zur Kasse
               </button>
             ) : (
               <form onSubmit={handleOrder} className="space-y-3 animate-bounce-in">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-black text-xl text-foreground">Checkout</h3>
+                  <h3 className="font-black text-xl text-foreground">Kasse</h3>
                   <button
                     type="button"
                     onClick={() => setShowCheckout(false)}
                     className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xl transition-colors"
-                    aria-label="Close checkout"
+                    aria-label="Kasse schliessen"
                   >
                     <X className="w-5 h-5" />
                   </button>
                 </div>
                 <input
                   type="text"
-                  placeholder="Your Name"
+                  placeholder="Dein Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -168,7 +168,7 @@ export function Cart() {
                 />
                 <input
                   type="text"
-                  placeholder="Delivery Address"
+                  placeholder="Lieferadresse"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   required
@@ -179,7 +179,7 @@ export function Cart() {
                   className="w-full bg-gradient-to-r from-primary via-accent to-primary text-primary-foreground py-4 rounded-2xl font-black text-lg hover:shadow-xl hover:shadow-primary/30 transition-all hover:-translate-y-0.5 active:scale-[0.98] flex items-center justify-center gap-2"
                 >
                   <Rocket className="w-5 h-5" />
-                  Place Order - {formatPrice(totalPrice)}
+                  Bestellen - {formatPrice(totalPrice)}
                 </button>
               </form>
             )}

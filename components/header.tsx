@@ -38,7 +38,7 @@ export function Header() {
             }`}
           />
           <span className={`text-sm font-semibold ${isOpen ? "text-primary" : "text-destructive"}`}>
-            {isOpen ? "Jetzt offen!" : "Geschlossen"} 
+            {isOpen ? "Open Now!" : "Closed"} 
           </span>
         </div>
       </div>
